@@ -180,6 +180,10 @@ extern int confirm_flag;
 extern char *device;
 extern int pmtudisc;
 
+extern long ntransmitted_local;	/* Number of packets transmitted during this interval. */
+extern long nreceived_local;		/* number of packets received during this interval. */
+
+
 extern volatile int in_pr_addr;		/* pr_addr() is executing */
 extern jmp_buf pr_addr_jmp;
 
@@ -267,7 +271,22 @@ static inline void acknowledge(__u16 seq)
 
 static inline void advance_ntransmitted(void)
 {
+
+	/* The interval at which we want to print stats. */
+	int interval = 10;
+
+	/* If we've transmitted packets and we're at our interval, print up packet 
+		stats and reset our counters.
+	*/
+	if (ntransmitted_local > 0 && ( ntransmitted_local % interval ) == 0) {
+		printf("transmitted=%ld received=%ld\n", ntransmitted_local, nreceived_local);
+		ntransmitted_local = 0;
+		nreceived_local = 0;
+	}
+
 	ntransmitted++;
+	ntransmitted_local++;
+
 	/* Invalidate acked, if 16 bit seq overflows. */
 	if ((__u16)ntransmitted - acked > 0x7FFF)
 		acked = (__u16)ntransmitted + 1;

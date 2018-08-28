@@ -66,6 +66,12 @@ int confirm = 0;
 volatile int in_pr_addr = 0;	/* pr_addr() is executing */
 jmp_buf pr_addr_jmp;
 
+
+long ntransmitted_local;	/* Number of packets transmitted during this interval. */
+long nreceived_local;		/* number of packets received during this interval. */
+
+
+
 /* Stupid workarounds for bugs/missing functionality in older linuces.
  * confirm_flag fixes refusing service of kernels without MSG_CONFIRM.
  * i.e. for linux-2.2 */
@@ -779,6 +785,7 @@ int gather_statistics(__u8 *icmph, int icmplen,
 	__u8 *ptr = icmph + icmplen;
 
 	++nreceived;
+	++nreceived_local;
 	if (!csfailed)
 		acknowledge(seq);
 
@@ -817,9 +824,11 @@ restamp:
 	if (csfailed) {
 		++nchecksum;
 		--nreceived;
+		--nreceived_local;
 	} else if (rcvd_test(seq)) {
 		++nrepeats;
 		--nreceived;
+		--nreceived_local;
 		dupflag = 1;
 	} else {
 		rcvd_set(seq);
