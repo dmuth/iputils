@@ -69,6 +69,7 @@ jmp_buf pr_addr_jmp;
 
 long ntransmitted_local;	/* Number of packets transmitted during this interval. */
 long nreceived_local;		/* number of packets received during this interval. */
+char *target_global;
 
 
 
@@ -849,7 +850,7 @@ restamp:
 		__u8 *cp, *dp;
 
 		print_timestamp();
-		printf("%d bytes from %s:", cc, from);
+		printf("%d bytes from %s: target=%s", cc, from, target_global);
 
 		if (pr_reply)
 			pr_reply(icmph, cc);

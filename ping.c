@@ -480,6 +480,7 @@ main(int argc, char **argv)
 		usage();
 
 	target = argv[argc-1];
+	target_global = target;
 
 	/* Create sockets */
 	enable_capability_raw();

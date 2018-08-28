@@ -182,6 +182,7 @@ extern int pmtudisc;
 
 extern long ntransmitted_local;	/* Number of packets transmitted during this interval. */
 extern long nreceived_local;		/* number of packets received during this interval. */
+extern char *target_global;
 
 
 extern volatile int in_pr_addr;		/* pr_addr() is executing */
@@ -279,7 +280,7 @@ static inline void advance_ntransmitted(void)
 		stats and reset our counters.
 	*/
 	if (ntransmitted_local > 0 && ( ntransmitted_local % interval ) == 0) {
-		printf("transmitted=%ld received=%ld\n", ntransmitted_local, nreceived_local);
+		printf("target=%s transmitted=%ld received=%ld\n", target_global, ntransmitted_local, nreceived_local);
 		ntransmitted_local = 0;
 		nreceived_local = 0;
 	}
