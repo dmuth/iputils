@@ -1,3 +1,20 @@
+
+# This is not the iputils you are looking for!
+
+This repo is forked from the official repo, but contains a hacked version of ping 
+that I tweaked for use in my [Splunk Network Health Check](https://github.com/dmuth/splunk-network-health-check).
+
+## Development Instructions
+
+```
+docker build -t iputils . && docker run -it -v $(pwd):/mnt iputils
+# cd /mnt/
+# make && /mnt/ping google.com
+```
+
+
+# Iputils
+
 [![Build Status](https://travis-ci.org/iputils/iputils.svg?branch=master)](https://travis-ci.org/iputils/iputils)
 [![Coverity Status](https://scan.coverity.com/projects/1944/badge.svg?flat=1)](https://scan.coverity.com/projects/1944)
 
