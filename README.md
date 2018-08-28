@@ -12,6 +12,16 @@ docker build -t iputils . && docker run -it -v $(pwd):/mnt iputils
 # make && /mnt/ping google.com
 ```
 
+## Sample Output
+
+<img src="./img/hacked-ping.png" />
+
+Note the following additions:
+
+- The target hostname/IP is included in the output.
+- Every 10 pings transmitted, stats for the last 10 pings are written.
+- ...this also means that latency followed by recovery could cause received values of higher than 10. Please plan for this!
+
 
 # Iputils
 
